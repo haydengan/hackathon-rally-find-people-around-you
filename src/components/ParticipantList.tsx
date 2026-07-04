@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ReputationBadge } from '@/components/ReputationBadge';
 import type { Participant } from '@/types';
 
 interface ParticipantListProps {
@@ -67,10 +66,9 @@ export function ParticipantList({ participants, creatorId }: ParticipantListProp
               </div>
 
               {profile && (
-                <ReputationBadge
-                  score={profile.reputation_score}
-                  eventsAttended={profile.events_attended}
-                />
+                <span className="text-xs text-muted-foreground">
+                  {profile.events_attended} events
+                </span>
               )}
             </Link>
           );

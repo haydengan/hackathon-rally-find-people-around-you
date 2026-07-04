@@ -19,7 +19,6 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ParticipantList } from '@/components/ParticipantList';
 import { ChatPanel } from '@/components/ChatPanel';
-import { ReputationBadge } from '@/components/ReputationBadge';
 import { createClient } from '@/lib/supabase/client';
 import { ACTIVITY_TYPES, SKILL_LEVELS, type Event, type Participant } from '@/types';
 
@@ -373,15 +372,7 @@ function EventDetailPage() {
                 </div>
                 <span>{skillLabel}</span>
               </div>
-              {event.min_reputation > 0 && (
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-50">
-                    <Shield className="h-4 w-4 text-yellow-600" />
-                  </div>
-                  <span>Min reputation: <span className="font-semibold">{event.min_reputation}</span></span>
-                </div>
-              )}
-            </div>
+              </div>
 
             {/* Action buttons */}
             <div className="space-y-2">

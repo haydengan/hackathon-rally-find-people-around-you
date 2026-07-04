@@ -23,8 +23,8 @@ const FEATURES = [
   },
   {
     icon: Star,
-    title: 'Reputation',
-    description: 'Build trust through reliable attendance. See who shows up and who flakes.',
+    title: 'Auto-Match',
+    description: 'Set your schedule once. We automatically find nearby people who are free at the same time.',
     color: 'bg-amber-100 text-amber-600',
   },
 ];

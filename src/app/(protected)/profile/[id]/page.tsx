@@ -220,14 +220,7 @@ export default function PublicProfilePage() {
 
         <CardContent className="space-y-6">
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="space-y-1">
-              <div className="flex items-center justify-center gap-1">
-                <Star className="size-4 text-yellow-500" />
-                <span className="text-lg font-semibold">{profile.reputation_score}</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Reputation</p>
-            </div>
+          <div className="grid grid-cols-2 gap-4 text-center">
             <div className="space-y-1">
               <div className="flex items-center justify-center gap-1">
                 <Calendar className="size-4 text-primary" />

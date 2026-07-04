@@ -367,24 +367,6 @@ export function EventForm({ defaultLocation, onSuccess }: EventFormProps) {
           )}
         />
 
-        {/* Min Reputation */}
-        <FormField
-          control={form.control}
-          name="min_reputation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Min Reputation (0-80)</FormLabel>
-              <FormControl>
-                <Input type="number" min={0} max={80} placeholder="0" {...field} />
-              </FormControl>
-              <FormDescription>
-                Set to 0 to allow anyone to join
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Submit */}
         <Button type="submit" className="w-full" disabled={submitting}>
           {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
