@@ -530,7 +530,7 @@ function AddActivitySheet({
           {/* Activity picker */}
           <div className="space-y-2">
             <label className="text-sm font-semibold">Activity</label>
-            <Select value={activityType} onValueChange={setActivityType}>
+            <Select value={activityType} onValueChange={(v) => setActivityType(v ?? '')}>
               <SelectTrigger className="w-full rounded-xl">
                 <SelectValue placeholder="What do you want to do?" />
               </SelectTrigger>
