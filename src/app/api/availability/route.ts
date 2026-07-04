@@ -366,32 +366,30 @@ async function tryAutoMatch(
       return;
     }
 
-    // Add creator as participant
-    await supabase.from('event_participants').insert({
-      event_id: newEvent.id,
-      user_id: userId,
-    });
+    // Event created with spots_taken=0 — nobody is in yet, all must accept
+    // Update spots_taken to 0 (override the default 1)
+    await supabase.from('events').update({ spots_taken: 0 }).eq('id', newEvent.id);
 
-    // Notify the creator that a match was found + send them an invitation too
-    await supabase.from('notifications').insert({
-      user_id: userId,
-      type: 'event_reminder',
-      title: `🎉 Match found! Event created`,
-      body: `We matched you with ${nearbyUsers.length} ${nearbyUsers.length === 1 ? 'person' : 'people'} for ${activityType}. Check your event!`,
-      metadata: { event_id: newEvent.id },
-      read: false,
-    });
-
-    // Send invitation to creator too (so they see it in their inbox)
+    // Send PENDING invitation to the person who triggered the match
     await supabase.from('event_invitations').insert({
       event_id: newEvent.id,
       inviter_id: null,
       invitee_id: userId,
       type: 'auto_suggest',
-      status: 'accepted',
+      status: 'pending',
       suggested_location: suggestedLocation,
       suggested_activity: activityType,
       suggested_time: `${dayNames[dayOfWeek]} ${hourNum > 12 ? (hourNum - 12) + 'pm' : hourNum + 'am'}`,
+    });
+
+    // Notify the creator
+    await supabase.from('notifications').insert({
+      user_id: userId,
+      type: 'event_reminder',
+      title: `🎉 Match found! ${activityType}`,
+      body: `We found ${nearbyUsers.length} ${nearbyUsers.length === 1 ? 'person' : 'people'} nearby. Accept to confirm!`,
+      metadata: { event_id: newEvent.id },
+      read: false,
     });
 
     // Send invitations to all matched users

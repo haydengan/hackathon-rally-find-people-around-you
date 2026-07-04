@@ -188,10 +188,11 @@ export default function AvailabilityMatchPage() {
           <p className="text-white/80 text-[10px] font-medium uppercase tracking-wider mb-1">Happening around you</p>
           {(() => {
             const now = Date.now();
+            const threeDaysLater = now + 3 * 24 * 60 * 60 * 1000;
             const todayActive = events.filter((e) => {
               const start = new Date(e.starts_at).getTime();
               const end = e.ends_at ? new Date(e.ends_at).getTime() : start + 2 * 60 * 60 * 1000;
-              return isSameDay(new Date(e.starts_at), new Date()) && now <= end;
+              return start >= now && start <= threeDaysLater && now <= end || (start > now && start <= threeDaysLater);
             });
             return (
               <>
@@ -674,7 +675,7 @@ function AddActivitySheet({
                   <label className="text-sm font-semibold">
                     {mode === 'onetime' ? 'This week (tap to select)' : 'Every week (tap to select)'}
                   </label>
-                  <div className="rounded-xl border border-indigo-100 bg-white p-2 max-h-[45vh] overflow-auto select-none touch-none">
+                  <div className="rounded-xl border border-indigo-100 bg-white p-2 max-h-[45vh] overflow-auto select-none">
                     <table className="w-full border-collapse">
                       <thead className="sticky top-0 bg-white z-10">
                         <tr>
