@@ -242,7 +242,9 @@ async function tryAutoMatch(
     if (daysUntil < 0) daysUntil += 7; // Only add 7 if truly in the past, NOT if today
     const eventDate = new Date(now);
     eventDate.setDate(now.getDate() + daysUntil);
-    eventDate.setHours(hourNum, 0, 0, 0);
+    // Set time in Singapore timezone (UTC+8)
+    // hourNum is the user's intended hour in SGT, so subtract 8 for UTC
+    eventDate.setUTCHours(hourNum - 8, 0, 0, 0);
 
     // Look for existing active events with same activity on the same day
     const dayStart = new Date(eventDate);
@@ -334,7 +336,7 @@ async function tryAutoMatch(
     }
 
     const endsAt = new Date(eventDate);
-    endsAt.setHours(hourNum + 2);
+    endsAt.setUTCHours((hourNum - 8) + 2);
 
     // Auto-create the event
     const { data: newEvent, error: eventError } = await supabase

@@ -188,11 +188,18 @@ export default function AvailabilityMatchPage() {
           <p className="text-white/80 text-[10px] font-medium uppercase tracking-wider mb-1">Happening around you</p>
           {(() => {
             const now = Date.now();
-            const threeDaysLater = now + 3 * 24 * 60 * 60 * 1000;
+            const todayEnd = new Date();
+            todayEnd.setHours(23, 59, 59, 999);
             const todayActive = events.filter((e) => {
               const start = new Date(e.starts_at).getTime();
               const end = e.ends_at ? new Date(e.ends_at).getTime() : start + 2 * 60 * 60 * 1000;
-              return start >= now && start <= threeDaysLater && now <= end || (start > now && start <= threeDaysLater);
+              const isToday = start <= todayEnd.getTime();
+              const isFuture = start > now || (now >= start && now <= end);
+              // Only show events within 5km
+              const isNearby = userLocation && e.location_lat && e.location_lng
+                ? calculateDistance(userLocation, { lat: e.location_lat, lng: e.location_lng }) <= 5
+                : false;
+              return isToday && isFuture && isNearby;
             });
             return (
               <>
