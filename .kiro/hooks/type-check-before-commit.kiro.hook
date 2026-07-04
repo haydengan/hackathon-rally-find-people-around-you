@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Type Check Before Commit",
+  "description": "Runs TypeScript compiler to catch type errors before any code is committed or pushed",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "shell"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "If this shell command involves git commit or git push, first run 'npx tsc --noEmit' to verify there are no TypeScript errors. Only proceed with the commit/push if type checking passes. If there are errors, fix them first."
+  }
+}

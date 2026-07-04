@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Validate API Routes",
+  "description": "Reviews API route files to ensure they follow Zod validation, auth checks, and proper error handling patterns",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/api/**/route.ts"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review this new API route and verify it follows our coding standards: 1) Has Zod schema validation for request body (POST/PUT), 2) Checks auth with supabase.auth.getUser() before data operations, 3) Returns proper HTTP status codes (401 unauth, 400 validation, 403 forbidden/reputation, 409 conflict/full, 429 rate limit, 500 server error), 4) Uses try/catch with consistent error response format, 5) For geospatial queries, uses parameterized PostGIS functions (not string interpolation). Fix anything missing."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Supabase Migration Review",
+  "description": "Reviews SQL migration files for security best practices including RLS policies, PostGIS usage, and proper constraints",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/migrations/*.sql",
+      "**/supabase/**/*.sql"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review this SQL migration file and ensure: 1) All tables have Row Level Security (RLS) enabled, 2) Appropriate RLS policies for SELECT/INSERT/UPDATE/DELETE, 3) Foreign key constraints reference existing tables, 4) NOT NULL on required fields, 5) CHECK constraints for bounded values (reputation 0-100, spots 2-50, skill_level enum), 6) GIST index on geography columns for PostGIS, 7) Btree indexes on frequently queried columns (user_id, event_id, status), 8) PostGIS extension is enabled. Fix any missing security measures."
+  }
+}

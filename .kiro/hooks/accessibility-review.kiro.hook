@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Accessibility Review",
+  "description": "Reviews new component files for WCAG 2.1 AA compliance including aria labels, keyboard navigation, and color contrast",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/components/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review this new component for WCAG 2.1 Level AA accessibility compliance. Check for: 1) All interactive elements have aria-labels or associated labels, 2) Keyboard navigation works (focusable with Tab, activatable with Enter/Space), 3) Map markers have aria-labels with event title and activity type, 4) Form inputs have visible labels, 5) Touch targets are minimum 44x44px, 6) Dynamic content changes (participant count, chat messages) use aria-live regions. Fix any issues found."
+  }
+}
